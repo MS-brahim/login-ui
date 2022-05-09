@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <!-- https://cdnjs.com/libraries/twitter-bootstrap/5.0.0-beta1 -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/css/bootstrap.min.css"
+    />
+
+    <!-- Icons: https://getbootstrap.com/docs/5.0/extend/icons/ -->
+    <!-- https://cdnjs.com/libraries/font-awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+
+    <title>Login | UI desgin</title>
+    <style>
+        *{
+            letter-spacing: 2.5px;
+            font-family: 'Oleo Script Swash Caps', cursive;
+        }
+        body{
+            background: rgb(255,255,255);
+            background: linear-gradient(222deg, rgba(255,255,255,1) 0%, rgba(190,220,255,1) 100%); 
+        }
+        input:focus, button:focus{
+            box-shadow: none !important;
+        }
+        .form-control:focus {
+            border-color: gray;
+        }
+        .card {
+            background: rgb(246,247,248);
+            background: linear-gradient(222deg, rgba(246,247,248,1) 0%, rgba(190,220,255,0.7400093826593137) 100%); 
+        }
+        .loginBtn{
+            border: 3px solid #d0e6fe50;
+            letter-spacing:3px;
+        }
+        .loginBtn:active{
+            border: 3px inset #d0e6fe;
+        }
+        .form-check-input:checked {
+            background-color:#fdd641;
+            color: #fdd641;
+        }
+    </style>
+  </head>
+  <body class="d-flex vh-100 align-items-center justify-content-center">
+    <div class="container-sm">
+        <div class="card text-dark m-auto p-2 shadow-lg" style="max-width:410px; width:auto">
+            <div class="card-img-top text-center">
+                <h3 style="letter-spacing:4px; font-weight:bold; width: fit-content;" 
+                    class="my-3 px-4 py-2 mx-auto">Sign In</h3>
+                <div style="width: 200px;height: 200px;border: 10px outset #ecf3f9;margin: auto;border-radius: 50%;">
+                    <h1 class="text-center" style="font-size: 132px;">
+                        <span id="emojisHelper" class="text-muted"></span>
+    
+                    </h1>
+                    <!-- <img style="border-radius:50%;width: 100%;object-fit: cover;height: 100%;" 
+                        class="mx-auto" src="./E61gGkBsojIBrxToEdhJwem2mJ7K54S3g2uoUujc.png" alt=""> -->
+                </div>
+            </div>
+            <div class="card-body mb-3 py-2">
+                
+                <form action="#" method="post">
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <label for="email">Email address</label>
+                      </div>
+                      <div class="form-floating mb-2">
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                        <label for="password">Password</label>
+                        <small class="text-muted"></small>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input checked="false" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label d-flex" for="flexCheckDefault">
+                            <small>Restez connecté</small> 
+                        </label>
+                    </div>
+                    <div>
+                        <button id="loginBtn" type="button" class="loginBtn btn btn-md btn-light w-100 mb-3">Connect</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+    <script>
+        var email = document.getElementById("email");
+        var password = document.getElementById("password");
+        var loginBtn = document.getElementById("loginBtn");
+        var emojisHelper = document.getElementById("emojisHelper");
+
+        var emailValidate = function (e) {
+            // emojisHelper.innerText = "🙉"
+            
+            const inputText = e.target.value; // Get the text typed by user
+            let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (inputText.length>8 && inputText.match(emailRegex) ) {
+                emojisHelper.innerText = "💪"
+            } else{
+                validateInput(inputText, '🙉')
+                if (inputText.length>8) {
+                    
+                    emojisHelper.innerText = "@";
+                }
+
+            }
+        };
+        var passwordValidate = function (e) {
+            const inputText = e.target.value; // Get the text typed by user
+            validateInput(inputText, "🙈")
+        };
+        email.addEventListener("focus", emailValidate, false);
+        email.addEventListener("keyup", emailValidate, false);
+        password.addEventListener("focus", passwordValidate, false);
+        password.addEventListener("keyup", passwordValidate, false);
+
+        setInterval(function() {
+            loginBtn.innerHTML = "Connect";
+            loginBtn.disabled = false;
+        }, 6000);
+
+        loginBtn.addEventListener("click", function (e) {
+            if (email.value === "" || password.value === "") {
+                emojisHelper.innerText = "💔"
+            }else{
+                email.focus();
+                email.addEventListener("focus", emailValidate, false);
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = `<div 
+                style="width: 20px;
+                    height: 20px;
+                    border-width: 10px;" class="spinner-grow" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div 
+                style="width: 20px;
+                    height: 20px;
+                    border-width: 10px;" class="spinner-grow" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div 
+                style="width: 20px;
+                    height: 20px;
+                    border-width: 10px;" class="spinner-grow" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                `
+            }
+        });
+        
+        emojisHelper.innerText = "🤝";
+        function validateInput(text, initIcon) {
+            switch (text.length) {
+                case 0:
+                    emojisHelper.innerText = initIcon
+                    // emojisHelper.innerText = "😟"
+                    break;
+                case 1:
+                    emojisHelper.innerText = "😞"
+                    break;
+                case 2:
+                    emojisHelper.innerText = "🙁"
+                    break;
+                case 3:
+                    emojisHelper.innerText = "🤨"
+                    break;
+                case 4:
+                    emojisHelper.innerText = "😐"
+                    break;
+                case 5:
+                    emojisHelper.innerText = "😏"
+                    break;
+                case 6:
+                    emojisHelper.innerText = "🙂"
+                    break;
+                case 7:
+                    emojisHelper.innerText = "😀"
+                    break;
+                case 8:
+                    emojisHelper.innerText = "😛"
+                    break;
+            
+                default:
+                    break;
+            }
+        }
+    </script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+
+    <!-- https://cdnjs.com/libraries/popper.js/2.5.4 -->
+    <!-- <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/js/bootstrap.min.js"
+    ></script> -->
+
+    <!-- More: https://getbootstrap.com/docs/5.0/getting-started/introduction/ -->
+  </body>
+</html>
